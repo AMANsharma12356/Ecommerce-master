@@ -56,8 +56,8 @@ class UserControllerTest {
             "userPassword" to "789456123"
         )
         every {
-            userService.findAllusers()
-        } returns Flux.just(user)
+                    userService.findAllusers()
+                } returns Flux.just(user)
 
         val response = client.get()
             .uri("/users/list")
@@ -74,65 +74,65 @@ class UserControllerTest {
         }
     }
 
-    @Test
-    fun `should return one user`() {
+            @Test
+            fun `should return one user`() {
 
-        val user = User(
-            "12", "Aman", "123456789", "789456123"
-        )
+                val user = User(
+                    "12", "Aman", "123456789", "789456123"
+                )
 
-        val expectedResult = mapOf(
-            "userId" to "12",
-            "userName" to "Aman",
-            "userContactno" to "123456789",
-            "userPassword" to "789456123"
-        )
-        every {
-            userService.findById("1")
-        } returns Mono.just(user)
-        val response = client.get()
-            .uri("/users/1")
-            .accept(MediaType.APPLICATION_JSON)
-            .exchange() //invoking the end point
-            .expectStatus().is2xxSuccessful
-            .returnResult<Any>()
-            .responseBody
+                val expectedResult = mapOf(
+                    "userId" to "12",
+                    "userName" to "Aman",
+                    "userContactno" to "123456789",
+                    "userPassword" to "789456123"
+                )
+                every {
+                    userService.findById("1")
+                } returns Mono.just(user)
+                val response = client.get()
+                    .uri("/users/1")
+                    .accept(MediaType.APPLICATION_JSON)
+                    .exchange() //invoking the end point
+                    .expectStatus().is2xxSuccessful
+                    .returnResult<Any>()
+                    .responseBody
 
-        response.blockFirst() shouldBe expectedResult
+                response.blockFirst() shouldBe expectedResult
 
-        verify(exactly = 1) {
-            userService.findById("1")
+                verify(exactly = 1) {
+                    userService.findById("1")
+                }
+            }
+
+//    @Test
+//    fun `register user and update user when api is called`(){
+//
+//        val exepectedResponse = mapOf(
+//            "userId" to "12",
+//            "userName" to "Aman",
+//            "userContactno" to "123456789",
+//            "userPassword" to "789456123"
+//        )
+//        val user = User(
+//            "12", "Aman", "123456789", "789456123"
+//        )
+//
+//        every {
+//            userService.addUser(user)
+//        } returns Mono.just(user)
+//
+//        val response = client.post()
+//            .uri("/users/add")
+//            .bodyValue(user)
+//            .exchange()
+//            .expectStatus().is2xxSuccessful
+//            .returnResult<Any>().responseBody
+//
+//        response.blockFirst() shouldBe exepectedResponse
+//
+//        verify(exactly = 1){
+//            userService.addUser(user)
+//        }
+//    }
         }
-    }
-
-    @Test
-    fun `should register User add user when create api is being called`() {
-
-        val exepectedResponse = mapOf(
-            "userId" to "12",
-            "userName" to "Aman",
-            "userContactno" to "123456789",
-            "userPassword" to "789456123"
-        )
-        val user = User(
-            "12", "Aman", "123456789", "789456123"
-        )
-
-        every {
-            userService.addUser(user)
-        } returns Mono.just(user)
-
-        val response = client.post()
-            .uri("/users/add")
-            .bodyValue(user)
-            .exchange()
-            .expectStatus().is2xxSuccessful
-            .returnResult<Any>().responseBody
-
-        response.blockFirst() shouldBe exepectedResponse
-
-        verify(exactly = 1) {
-            userService.addUser(user)
-        }
-    }
-}

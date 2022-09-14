@@ -4,12 +4,9 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 
 @Document
-data class User(
+data class Product(
     @Id
-    var userId: String?,
-    var userName: String,
-    var userContactno: String,
-    var userPassword: String,
-
-    //aman
+    var productId: String?,
+    var productName: String,
+    var productPrice: String,
 )
