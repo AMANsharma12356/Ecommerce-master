@@ -19,7 +19,7 @@ class UserController(
     val userService: UserService
 ){
 
-    @GetMapping("/users/list")
+    @GetMapping("/users/")
     fun getAllUsers(): Flux<User> {
         return userService.findAllusers()
     }

@@ -60,7 +60,7 @@ class UserControllerTest {
                 } returns Flux.just(user)
 
         val response = client.get()
-            .uri("/users/list")
+            .uri("/users/")
             .accept(MediaType.APPLICATION_JSON)
             .exchange() //invoking the end point
             .expectStatus().is2xxSuccessful
