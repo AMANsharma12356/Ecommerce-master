@@ -1,5 +1,6 @@
 
 import arrow.core.mapOf
+import arrow.product
 import com.example.Ecommerce.controller.ProductController
 import com.example.Ecommerce.model.Product
 import com.example.Ecommerce.repository.ProductRepository
@@ -32,32 +33,39 @@ class ProductControlllerTest {
     lateinit var producTestCotService: ProductService
 
     @TestConfiguration
-    class ControllerTestConfig{
+    class ControllerTestConfig {
         @Bean
         fun productService() = mockk<ProductService>()
     }
 
+
     @Test
-    fun `should product when create api is being called`(){
-        val expectedResponse = listOf(
-           mapOf( "productId" to "111",
+    fun `register product and update user when api is called`() {
+
+        val exepectedResponse = mapOf(
+            "productId" to "111",
             "productName" to "Nokia",
-               "productPrice" to "15000"),
-//
+            "productPrice" to "15000"
         )
-val product1 = Product(
-    "111","Nokia","15000"
-)
+        val product = Product(
+            "111", "Nokia", "15000"
+        )
         every {
-            productService.addProduct(product1)
-        } returns Mono.just(product1)
+            productService.addProduct(product)
+        } returns Mono.just(product)
+
+        val response = client.post()
+            .uri("/products/add")
+            .bodyValue(product)
+            .exchange()
+            .expectStatus().is2xxSuccessful
+            .returnResult<Any>().responseBody
+
+        response.blockFirst() shouldBe exepectedResponse
+
+        verify(exactly = 1) {
+            productService.addProduct(product)
+        }
     }
-    val response = client.post()
-        .uri("/product")
-        .bodyValue(product1)
-        .exchange()
-        .expectStatus().is2xxSuccessful
-        .returnResult<Any>().responseBody
-
-
 }
+
