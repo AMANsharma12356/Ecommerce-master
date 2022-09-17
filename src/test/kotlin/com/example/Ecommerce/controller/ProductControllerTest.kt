@@ -81,31 +81,31 @@ import reactor.core.publisher.Mono
         }
     }
 
-//@Test
-//fun `should able to update product`(){
-//    val expectedResponse = mapOf(
-//        "productId" to "111",
-//        "productName" to "Nokia",
-//        "productPrice" to "15000"
-//    )
-//    val product = Product(
-//        "111", "Nokia", "15000"
-//    )
-//    every {
-//        productService.addProduct(product)
-//    } returns Mono.just(product)
-//
-//    val response = client.put()
-//        .uri("/update/2")
-//        .bodyValue(product)
-//        .exchange()
-//        .expectStatus().is2xxSuccessful
-//
-//
-//    verify(exactly = 1) {
-//        productService.updateProduct(product)
-//    }
-//}
+@Test
+fun `should able to update product`(){
+    val expectedResponse = mapOf(
+        "productId" to "111",
+        "productName" to "Nokia",
+        "productPrice" to "15000"
+    )
+    val product = Product(
+        "111", "Nokia", "15000"
+    )
+    every {
+        productService.updateProductById("1",product)
+    } returns Mono.just(product)
+
+    val response = client.put()
+        .uri("/updateProduct/1")
+        .bodyValue(product)
+        .exchange()
+        .expectStatus().is2xxSuccessful
+
+
+    verify(exactly = 1) {
+        productService.updateProductById("1",product)
+    }
+}
 
 }
 

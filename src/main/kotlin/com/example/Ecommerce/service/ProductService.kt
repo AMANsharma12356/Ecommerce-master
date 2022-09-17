@@ -23,7 +23,7 @@ class ProductService(
 
     }
 
-    fun updateProduct(product: Product): Mono<Product> {
+    fun updateProductById(id:String, product: Product): Mono<Product> {
         return productRepository.save(product)
     }
 

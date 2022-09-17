@@ -35,11 +35,15 @@ class ProductController (
     fun save(@RequestBody product: Product): Mono<Product> {
         return productService.addProduct(product)
     }
-    @PutMapping("/update/2")
-    fun updateById(@PathVariable("id") id: String, @RequestBody product: Product): Mono<Product> {
-        return productService.updateProduct(product)
-    }
+//    @PutMapping("/update/{id}")
+//    fun updateById(@PathVariable("id") id: String, @RequestBody product: Product): Mono<Product> {
+//        return productService.updateProduct(id,product)
+//    }
 
+    @PutMapping("/updateProduct/{id}")
+    fun update(@PathVariable("id") id: String,@RequestBody product: Product): Mono<Product> {
+        return productService.updateProductById(id,product)
+    }
     @DeleteMapping("/products/{id}")
     fun deleteUser(@PathVariable id: String): Mono<Void> {
         return productService.deleteById(id)
