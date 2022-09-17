@@ -8,9 +8,8 @@ import org.springframework.stereotype.Repository
 import reactor.core.publisher.Mono
 
 @Repository
-interface ProductRepository : ReactiveMongoRepository<Product, Int> {
-    fun deleteById(id: String): Mono<Void>
-    fun findById(id: String): Mono<Product>
+interface ProductRepository : ReactiveMongoRepository<Product, String> {
+
 
 
 }

@@ -19,7 +19,7 @@ class UserController(
     val userService: UserService
 ){
 
-    @GetMapping("/users/")
+    @GetMapping("/users/list")
     fun getAllUsers(): Flux<User> {
         return userService.findAllusers()
     }
@@ -31,7 +31,7 @@ class UserController(
 
     @PostMapping("/users/add")
     fun save(@RequestBody user: User): Mono<User> {
-        return UserService.addUser(user)
+        return userService.addUser(user)
     }
 
     @PutMapping("/update/{id}")

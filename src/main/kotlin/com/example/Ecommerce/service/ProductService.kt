@@ -14,9 +14,9 @@ class ProductService(
     @Autowired
     val productRepository: ProductRepository
 ) {
-    fun findAllproducts(): Flux<Product> {
-        return productRepository.findAll()
-    }
+//    fun findAllproducts(): Flux<Product> {
+//        return productRepository.findAll()
+//    }
 
     fun addProduct(product: Product): Mono<Product> {
         return productRepository.save(product)
@@ -31,16 +31,14 @@ class ProductService(
         return productRepository.deleteById(id)
     }
 
-    fun findById(id: String): Mono<Product> {
-        return productRepository.findById(id)
-    }
+//    fun findById(id: String): Mono<Product> {
+//        return productRepository.findById(id)
+//    }
 
-    companion object {
-        fun addProduct(product: Any): Mono<Product> {
-            TODO("Not yet implemented")
+//    companion object {
+//        fun addProduct(product: Any): Mono<Product> {
+//            TODO("Not yet implemented")
         }
-    }
-}
 
 
 

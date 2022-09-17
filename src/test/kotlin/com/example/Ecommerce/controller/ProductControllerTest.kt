@@ -1,9 +1,16 @@
+package com.example.Ecommerce.controller
+
+import org.junit.jupiter.api.Assertions.*
+
+
+
 
 import arrow.core.mapOf
 import arrow.product
 import com.example.Ecommerce.controller.ProductController
 import com.example.Ecommerce.model.Product
 import com.example.Ecommerce.repository.ProductRepository
+import com.example.Ecommerce.repository.UserRepository
 import com.example.Ecommerce.service.ProductService
 import io.kotlintest.shouldBe
 import io.mockk.every
@@ -24,25 +31,31 @@ import reactor.core.publisher.Mono
 
 @WebFluxTest(ProductController::class)
 @AutoConfigureWebTestClient
-class ProductControlllerTest {
+ class ProductControllerTest {
 
     @Autowired
     lateinit var client: WebTestClient
 
     @Autowired
-    lateinit var producTestCotService: ProductService
+    lateinit var productService: ProductService
+
+//    @Autowired
+//    lateinit var productRepository: ProductRepository
 
     @TestConfiguration
     class ControllerTestConfig {
         @Bean
         fun productService() = mockk<ProductService>()
+
+//        @Bean
+//        fun productRepository() = mockk<ProductRepository>()
     }
 
 
     @Test
-    fun `register product and update user when api is called`() {
+    fun ` should register add product`() {
 
-        val exepectedResponse = mapOf(
+        val expectedResponse = mapOf(
             "productId" to "111",
             "productName" to "Nokia",
             "productPrice" to "15000"
@@ -61,11 +74,38 @@ class ProductControlllerTest {
             .expectStatus().is2xxSuccessful
             .returnResult<Any>().responseBody
 
-        response.blockFirst() shouldBe exepectedResponse
+        response.blockFirst() shouldBe expectedResponse
 
         verify(exactly = 1) {
             productService.addProduct(product)
         }
     }
+
+//@Test
+//fun `should able to update product`(){
+//    val expectedResponse = mapOf(
+//        "productId" to "111",
+//        "productName" to "Nokia",
+//        "productPrice" to "15000"
+//    )
+//    val product = Product(
+//        "111", "Nokia", "15000"
+//    )
+//    every {
+//        productService.addProduct(product)
+//    } returns Mono.just(product)
+//
+//    val response = client.put()
+//        .uri("/update/2")
+//        .bodyValue(product)
+//        .exchange()
+//        .expectStatus().is2xxSuccessful
+//
+//
+//    verify(exactly = 1) {
+//        productService.updateProduct(product)
+//    }
+//}
+
 }
 

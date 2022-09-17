@@ -18,31 +18,28 @@ import reactor.core.publisher.Mono
 //@RequestMapping("v1")
 class ProductController (
     @Autowired
-    val productRepository: ProductRepository,
+    //val productRepository: ProductRepository,
     val productService: ProductService,
     ){
 
-        @GetMapping("/products/list")
-        fun getAllProducts(): Flux<Product> {
-            return productService.findAllproducts()
-        }
+//        @GetMapping("/products/list")
+//        fun getAllProducts(): Flux<Product> {
+//            return productService.findAllproducts()
+//        }
 
-    @GetMapping("/products/{id}")
-    fun getUserById(@PathVariable id: String): Mono<Product> {
-        return productService.findById(id)
-    }
+//    @GetMapping("/products/{id}")
+//    fun getUserById(@PathVariable id: String): Mono<Product> {
+//        return productService.findById(id)
+//    }
     @PostMapping("/products/add")
     fun save(@RequestBody product: Product): Mono<Product> {
-        return ProductService.addProduct(product)
+        return productService.addProduct(product)
     }
-    @PutMapping("/update/{id}")
+    @PutMapping("/update/2")
     fun updateById(@PathVariable("id") id: String, @RequestBody product: Product): Mono<Product> {
         return productService.updateProduct(product)
     }
-    @DeleteMapping
-    fun delete(): Mono<Void> {
-        return productRepository.deleteAll()
-    }
+
     @DeleteMapping("/products/{id}")
     fun deleteUser(@PathVariable id: String): Mono<Void> {
         return productService.deleteById(id)
