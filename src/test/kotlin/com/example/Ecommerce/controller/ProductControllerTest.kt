@@ -53,7 +53,7 @@ import reactor.core.publisher.Mono
 
 
     @Test
-    fun ` should register add product`() {
+    fun `should create product when api is being called`() {
 
         val expectedResponse = mapOf(
             "productId" to "111",
