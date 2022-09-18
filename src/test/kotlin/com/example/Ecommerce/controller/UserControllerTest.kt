@@ -106,7 +106,7 @@ class UserControllerTest {
             }
 
    @Test
-    fun `register add user`(){
+    fun `should create user when api is being called`(){
 
         val expectedResponse = mapOf(
             "userId" to "12",
