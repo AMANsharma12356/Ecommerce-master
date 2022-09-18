@@ -107,5 +107,29 @@ fun `should able to update product`(){
     }
 }
 
+    @Test
+    fun `should able to delete product`() {
+
+        val expectedResponse = mapOf(
+            "productId" to "111",
+            "productName" to "Nokia",
+            "productPrice" to "15000"
+        )
+        val product = Product(
+            "111", "Nokia", "15000"
+        )
+        every {
+            productService.deleteById("1")
+        } returns Mono.empty()
+        val response = client.delete()
+            .uri("/products/1")
+            .exchange()
+            .expectStatus().is2xxSuccessful
+
+        verify(exactly = 1) {
+            productService.deleteById("1")
+        }
+
+    }
 }
 
