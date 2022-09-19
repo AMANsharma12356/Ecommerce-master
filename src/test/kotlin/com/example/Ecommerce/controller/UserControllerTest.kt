@@ -43,22 +43,26 @@ class UserControllerTest {
     }
 
     @Test
-
+//arranging the data member
     fun `should return list  `() {
         val user = User(
             "12", "Aman", "123456789", "789456123"
         )
 
+        //expectations
         val expectedResult = mapOf(
             "userId" to "12",
             "userName" to "Aman",
             "userContactno" to "123456789",
             "userPassword" to "789456123"
         )
+
+        //action - invoking the methods
         every {
                     userService.findAllusers()
                 } returns Flux.just(user)
 
+        //Assertions
         val response = client.get()
             .uri("/users/list")
             .accept(MediaType.APPLICATION_JSON)
@@ -73,7 +77,9 @@ class UserControllerTest {
             userService.findAllusers()
         }
     }
-
+    //dealing with Api's
+//as a user i want to retrieve all the users from the database
+    //Api -
             @Test
             fun `should return one user`() {
 
@@ -135,4 +141,28 @@ class UserControllerTest {
             userService.addUser(user)
         }
     }
+    @Test
+    fun `should able to delete user`() {
+        val expectedResponse = mapOf(
+            "userId" to "12",
+            "userName" to "Aman",
+            "userContactno" to "123456789",
+            "userPassword" to "789456123"
+        )
+        val user = User(
+            "12", "Aman", "123456789", "789456123"
+        )
+        every {
+            userService.deleteById("1")
+        } returns Mono.empty()
+        val response = client.delete()
+            .uri("/users/1")
+            .exchange()
+            .expectStatus().is2xxSuccessful
+
+        verify(exactly = 1) {
+            userService.deleteById("1")
+        }
+    }
+
         }
